@@ -6,12 +6,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
-import { signIn, signOut } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useGSAP } from "@gsap/react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { useState, useContext, useRef, RefObject } from "react";
+import { useState, useContext, useRef } from "react";
 import Link from "next/link";
 import { ToggleContext } from "@/context";
 const passwordValidation = new RegExp(
@@ -41,6 +40,7 @@ const Login = () => {
   const container = useRef<HTMLElement | null>(null);
   const { toggle } = useContext(ToggleContext);
   const router = useRouter();
+  
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -48,6 +48,7 @@ const Login = () => {
       password: "Shivom@007",
     },
   });
+
   const [type, setType] = useState(true);
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const response = await signIn("credentials", {
@@ -55,23 +56,20 @@ const Login = () => {
       redirect: false,
     });
     console.log({ response });
-    if (!response?.error) {
-      alert("Login Successful");
-      router.push("/");
-      // router.refresh();
+    if(response?.ok){
+      router.push('/')
     }
   }
   const handleGithub = async () => {
     const response = await signIn("github", {
-      callbackUrl: '/'
+      callbackUrl: "/",
     });
     console.log({ response });
-    
   };
 
   const handleGoogle = async () => {
     const response = await signIn("google", {
-      callbackUrl: '/'
+      callbackUrl: "/",
     });
     console.log({ response });
   };
@@ -90,7 +88,7 @@ const Login = () => {
   return (
     <section
       ref={container}
-      className="flex  items-center w-screen sm:static relative  justify-center"
+      className={`flex   items-center w-screen sm:static relative  justify-center `}
     >
       <div
         id="animate"

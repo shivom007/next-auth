@@ -1,12 +1,6 @@
 "use client";
-import React, {
-  createContext,
- 
-  useContext,
- 
-  useState,
-  
-} from "react";
+import React, { createContext, useContext, useState } from "react";
+import { SessionProvider } from "next-auth/react";
 
 type ToggleState = boolean;
 
@@ -20,6 +14,10 @@ export const ToggleContext = createContext<ToggleContextValue>({
   setToggle: () => {},
 });
 
+export const useToggle = () => {
+  const toggle = useContext(ToggleContext);
+  return toggle;
+};
 
 export const ToggleProvider = ({
   children,
@@ -27,10 +25,10 @@ export const ToggleProvider = ({
   const [toggle, setToggle] = useState<ToggleState>(false);
 
   return (
-    <ToggleContext.Provider value={{ toggle, setToggle }}>
-      {children}
-    </ToggleContext.Provider>
+    <SessionProvider>
+      <ToggleContext.Provider value={{ toggle, setToggle }}>
+        {children}
+      </ToggleContext.Provider>
+    </SessionProvider>
   );
 };
-
-

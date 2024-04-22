@@ -10,7 +10,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <ToggleProvider>
         <body className={`${inter.className}`}>{children}</body>
       </ToggleProvider>

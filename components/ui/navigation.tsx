@@ -10,7 +10,7 @@ const Navigation = () => {
   const router = useRouter();
   const [toggled, setToggled] = useState(false);
   return (
-    <nav className="flex h-[80px] sticky  justify-around  items-center  ">
+    <div className="flex h-[80px] sticky  justify-around  items-center">
       <div
         onClick={() => router.push("/")}
         className="flex items-center -ml-6 sm:-ml-0  cursor-pointer gap-[12px]"
@@ -79,7 +79,7 @@ const Navigation = () => {
           alt="Picture of the author"
         />
       </div>
-    </nav>
+    </div>
   );
 };
 

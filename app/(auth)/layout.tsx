@@ -1,16 +1,23 @@
 "use client";
 import Navigation from "@/components/ui/navigation";
-import { ToggleProvider, ToggleContext } from "@/context";
-import { useContext } from "react";
+import { useToggle} from "@/context";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { toggle } = useContext(ToggleContext);
+  const { toggle } = useToggle()
+  const router = useRouter()
+  const {data: session, status} = useSession();
+  if(status === 'authenticated'){
+    return router.push('/')
+  }
+  
   return (
-    <div
+    <main
       className={`bg-no-repeat min-h-screen overflow-x-hidden hello  overflow-y-hidden  sm:min-h-screen sm:bg-gradient-to-br bg-gradient-to-tr ${
         toggle
           ? "from-slate-300 to-zinc-800"
@@ -19,6 +26,6 @@ export default function RootLayout({
     >
       <Navigation />
       {children}
-    </div>
+    </main>
   );
 }
