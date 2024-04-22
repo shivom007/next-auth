@@ -22,7 +22,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       async authorize(credentials, req) {
         const { email, password } = credentials as typeCredentials;
 
-        console.log(email, password);
+        // console.log(email, password);
         if (email && password) {
           let name = email.split("@")[0];
           let user = {
