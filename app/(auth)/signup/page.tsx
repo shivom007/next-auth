@@ -21,6 +21,7 @@ import Link from "next/link";
 import { ToggleContext } from "@/context";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { signIn } from "next-auth/react";
 const passwordValidation = new RegExp(
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
 );
@@ -65,6 +66,19 @@ const Signup = () => {
   function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data);
   }
+  const handleGithub = async () => {
+    const response = await signIn("github", {
+      callbackUrl: "/",
+    });
+    console.log({ response });
+  };
+
+  const handleGoogle = async () => {
+    const response = await signIn("google", {
+      callbackUrl: "/",
+    });
+    console.log({ response });
+  };
 
   const handleType = () => {
     setType(!type);
@@ -220,7 +234,7 @@ const Signup = () => {
           </div>
           <div className="flex sm:w-[300px] w-[260px] gap-[8px]">
             <div
-              onClick={() => router.push("/")}
+              onClick={handleGithub}
               className="flex cursor-default p-[10px] gap-[8px] justify-center items-center w-[140px] sm:w-[146px] h-[44px] sm:h-[48px] bg-inherit sm:bg-[#FFFEFE] hover:bg-[#0029FF] hover:text-white rounded-[12px]"
             >
               <Image
@@ -234,7 +248,7 @@ const Signup = () => {
               </span>
             </div>
             <div
-              onClick={() => router.push("/")}
+              onClick={handleGoogle}
               className="flex p-[10px] cursor-default gap-[8px] justify-center items-center w-[140px] sm:w-[146px] h-[44px] sm:h-[48px] bg-inherit sm:bg-[#FFFEFE] hover:bg-[#0029FF] hover:text-white rounded-[12px]"
             >
               <Image
