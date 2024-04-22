@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.btn:hover .arrow-icon {
+  transform: translateX(10px);
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
