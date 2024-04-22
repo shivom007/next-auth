@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    unoptimized: true,
-  },
-  distDir: "dist",
+    distDir : 'dist',
+    images : {
+        unoptimized: true
+    },
+    basePath: 'next-auth'
 };
 
 export default nextConfig;
